@@ -15,11 +15,14 @@ var lib = require('../../lib');
 
 // Lambda Handler
 module.exports.handler = function(event, context) {
+  var params = {
+    TableName: "resources",
+    Item: {
+      "Name": event["name"]
+    }
+  }
 
-  lib.resources.save({
-    "Name": event["name"]
-  }, function(error, response) {
-    return context.done(error, response);
+  lib.docClient.put(params, function(error, data) {
+    return context.done(error, data);
   });
-
 };
