@@ -48,6 +48,13 @@
                   "logs:PutLogEvents"
                 ],
                 "Resource": "arn:aws:logs:${region}:*:"
+              },
+              {
+                "Effect": "Allow",
+                "Action": [
+                  "dynamodb:*"
+                ],
+                "Resource": "*"
               }
             ]
           },
@@ -56,6 +63,28 @@
               "Ref": "IamRoleLambda"
             }
           ]
+        }
+      },
+      "resourcesTable": {
+        "Type": "AWS::DynamoDB::Table",
+        "Properties": {
+          "AttributeDefinitions": [
+            {
+              "AttributeName": "Name",
+              "AttributeType": "S"
+            }
+          ],
+          "KeySchema": [
+            {
+              "AttributeName": "Name",
+              "KeyType": "HASH"
+            }
+          ],
+          "ProvisionedThroughput": {
+            "ReadCapacityUnits": "1",
+            "WriteCapacityUnits": "1"
+          },
+          "TableName": "resources"
         }
       }
     },
