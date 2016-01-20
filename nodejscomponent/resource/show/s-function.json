@@ -10,13 +10,13 @@
   },
   "endpoints": [
     {
-      "path": "resource/show",
+      "path": "resource/show/{name}",
       "method": "GET",
       "authorizationType": "none",
       "apiKeyRequired": false,
       "requestParameters": {},
       "requestTemplates": {
-        "application/json": ""
+        "application/json": "{\"name\":\"$input.params('name')\"}"
       },
       "responses": {
         "400": {

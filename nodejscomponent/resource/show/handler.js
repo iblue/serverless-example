@@ -17,12 +17,16 @@ var lib = require('../../lib');
 module.exports.handler = function(event, context) {
   var params = {
     TableName: "resources",
-    Item: {
-      "Name": event["name"]
+    KeyConditionExpression: "#name = :name",
+    ExpressionAttributeNames: {
+      "#name": "Name"
+    },
+    ExpressionAttributeValues: {
+      ":name": event["name"]
     }
-  }
+  };
 
-  lib.docClient.put(params, function(error, data) {
+  lib.docClient.query(params, function(error, data) {
     return context.done(error, data);
   });
 };
